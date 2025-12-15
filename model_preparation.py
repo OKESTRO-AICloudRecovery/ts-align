@@ -39,6 +39,11 @@ time_now = time.time()
 train_steps = len(train_loader)
 early_stopping = EarlyStopping(accelerator=accelerator, patience=configs.patience)
 
+trained_parameters = []
+for p in model.parameters():
+    if p.requires_grad is True:
+        trained_parameters.append(p)
+
 model_optim = optim.Adam(trained_parameters, lr=configs.learning_rate)
 
 if configs.lradj == 'COS':
